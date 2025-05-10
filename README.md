@@ -1,5 +1,5 @@
-Python Final Project: Dictionary App
+Python Final Project: Dictionary GUI App
 
 The app allows the user to type in any word, and instantly find the definition for that word. 
 
-Simple interface allowing user to never get confused.
+Simple interface ensuring the user never gets confused.
