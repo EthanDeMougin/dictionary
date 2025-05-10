@@ -1,18 +1,19 @@
 import tkinter as tk
 from tkinter import messagebox
-from PyDictionary import PyDictionary
-
-dictionary = PyDictionary()
+import requests 
 
 def find_definition():
     word = entry.get().strip()
     if word:
+        url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
         try:
-            definition = dictionary.meaning(word)
-            if definition:
-                first_key = next(iter(definition))
-                first_definition = definition[first_key][0]
-                result_label.config(text=f"{word.capitalize()} ({first_key}): {first_definition}")
+            response = requests.get(url)
+            if response.status_code == 200:
+                data = response.json()
+                meaning = data[0]['meanings'][0]
+                part_of_speech = meaning['partOfSpeech']
+                definition = meaning['definitions'][0]['definition']
+                result_label.config(text=f"{word.capitalize()} ({part_of_speech}): {definition}")
             else:
                 messagebox.showerror("Word Not Found", f"The word '{word}' was not found.")
         except Exception as e:
